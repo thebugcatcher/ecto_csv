@@ -31,9 +31,9 @@ defmodule EctoCSV.Mixfile do
   def application do
     [
       extra_applications: [
+        :csv,
         :ecto,
         :logger,
-        :nimble_csv,
       ]
     ]
   end
@@ -41,11 +41,11 @@ defmodule EctoCSV.Mixfile do
   defp deps do
     [
       {:credo, "~> 0.5", only: [:dev, :test]},
+      {:csv, "~> 2.0.0"},
       {:ecto, "~> 2.1"},
       {:ex_doc, "~> 0.14", only: :dev, runtime: false},
       {:excoveralls, "~> 0.3", only: :test},
       {:inch_ex, "~> 0.5", only: [:dev, :test, :docs]},
-      {:nimble_csv, "~> 0.1.0"},
     ]
   end
 
