@@ -1,33 +1,97 @@
-defmodule EctoCsv.Mixfile do
+defmodule EctoCSV.Mixfile do
   use Mix.Project
 
+  @name "EctoCSV"
+  @version "0.0.1"
+  @url "https://github.com/aditya7iyengar/ecto_csv"
+
   def project do
-    [app: :ecto_csv,
-     version: "0.1.0",
-     elixir: "~> 1.4",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps()]
+    [
+      app: :ecto_csv,
+      build_embedded: Mix.env == :prod,
+      deps: deps(),
+      elixir: "~> 1.4",
+      start_permanent: Mix.env == :prod,
+      version: @version,
+      description: description(),
+      package: package(),
+
+      # Docs
+      name: @name,
+      docs: docs(),
+
+      # Test
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [coveralls: :test],
+      aliases: aliases(),
+      elixirc_paths: elixirc_paths(Mix.env),
+    ]
   end
 
-  # Configuration for the OTP application
-  #
-  # Type "mix help compile.app" for more information
   def application do
-    # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger]]
+    [
+      extra_applications: [
+        :ecto,
+        :logger,
+        :nimble_csv,
+      ]
+    ]
   end
 
-  # Dependencies can be Hex packages:
-  #
-  #   {:my_dep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:my_dep, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
-  #
-  # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:credo, "~> 0.5", only: [:dev, :test]},
+      {:ecto, "~> 2.1"},
+      {:ex_doc, "~> 0.14", only: :dev, runtime: false},
+      {:excoveralls, "~> 0.3", only: :test},
+      {:inch_ex, "~> 0.5", only: [:dev, :test, :docs]},
+      {:nimble_csv, "~> 0.1.0"},
+    ]
   end
+
+  def package do
+    [
+      files: ["lib", "mix.exs", "README.md"],
+      maintainers: ["Adi Iyengar"],
+      licenses: ["MIT"],
+      links: %{"Github" => @url},
+    ]
+  end
+
+  defp description do
+    """
+    Ecto adapter for CSVs as data source.
+    """
+  end
+
+  def docs do
+    [
+      main: @name,
+      source_url: @url,
+      extras: ["doc_readme.md", "CHANGELOG.md"],
+      source_ref: "v#{@version}"
+    ]
+  end
+
+  defp aliases do
+    [
+      "ecto.setup": [
+        "ecto.create",
+        "ecto.migrate"
+      ],
+     "ecto.reset": [
+        "ecto.drop",
+        "ecto.setup"
+      ],
+     "test": [
+        # "ecto.drop",
+        "ecto.create --quiet",
+        "ecto.migrate",
+        "test"
+      ],
+    ]
+  end
+
+  defp elixirc_paths(:test), do: ["lib", "priv", "test/support"]
+  defp elixirc_paths(_),     do: ["lib"]
 end

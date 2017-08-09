@@ -1,6 +1,8 @@
-# EctoCsv
+# Ecto.CSV
 
-**TODO: Add description**
+`Ecto.CSV` is an Ecto adapter that lets us use CSVs are our source of data
+
+For more information, please read the documentation associated with `Ecto.CSV`
 
 ## Installation
 
