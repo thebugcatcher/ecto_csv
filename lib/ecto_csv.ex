@@ -15,7 +15,8 @@ defmodule EctoCSV do
                   given, the database isn't backed up.
 
   ## Format Options
-    * `eol` - Character used to determine the end of line in the `csv`. Defaults to `"\n"`
+    * `eol` - Character used to determine the end of a line in the `csv`. Defaults to `"\n"`
+    * `eoc` - Character used to determine the end of a column in the `csv`. Defaults to `","`
 
   ## Advantages
     * Readabillity - <elaborate>
